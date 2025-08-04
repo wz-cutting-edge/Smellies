@@ -1,0 +1,1 @@
+/*write post, attach image (within file limit), or link url, has selectable tags (question, comment), (for men, for women, for unisex), (good blind, bad blind, layering, maceration, dupes), each of these categories you can only select one tag from */

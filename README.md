@@ -1,8 +1,8 @@
-# Web Development Final Project - *FragHead*
+# Web Development Final Project - *SMELLIES*
 
 Submitted by: **William Zheng**
 
-This web app: **insert description**
+This web app: **Smellies is the online hangout for people who smell... really good. It’s a fragrance forum where scent-obsessed folks share their blind buy wins (and horror stories), drop layering combos that go hard, and beg the community for cheaper dupes of $500 niche unicorns. Got a new cologne that smells like regret? Ask if it just needs to macerate. Found a hidden gem at Marshalls? Flex it. Smellies is where you come to laugh, cry, overthink your next purchase, and bond with other good-smelling weirdos who understand the thrill of cracking open a fresh bottle and asking the real questions: "Does this slap?"**
 
 Time spent: **X** hours spent in total
 
