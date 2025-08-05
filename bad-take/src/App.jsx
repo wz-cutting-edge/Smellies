@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./App";
+import Home from "./routes/Home";
 import CreatePost from "./routes/createPost";
 import DetailedPost from "./routes/DetailedPost";
 import EditPost from "./routes/EditPost";

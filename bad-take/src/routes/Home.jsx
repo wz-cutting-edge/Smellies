@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { supabase } from "./supabaseClient";
+import { supabase } from "../client";
 
 const Home = () =>{
   const [posts, setPosts] = useState([]);
@@ -33,13 +33,13 @@ const Home = () =>{
     query.then(({data, error}) =>{
       if (data) setPosts(data);
     });
-  }, [sortBy, searchTitle, selectTag]);
+  }, [sortBy, searchTitle, selectedTag]);
   return (
     <div className="home">
       <div className="filters">
         <input
-          value={search}
-          onChange={e => setSearch(e.target.value)}
+          value={searchTitle}
+          onChange={e => setSearchTitle(e.target.value)}
           placeholder="Search posts by title"
         />
 

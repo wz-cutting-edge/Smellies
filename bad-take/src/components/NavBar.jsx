@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
 import { supabase } from "../client.js";
 import { useState, useEffect } from "react";
-import logo from "../assets/smellies logo.png"; // Adjust path as needed
+import logo from "../assets/smellies logo.png";
 
 const NavBar = () => {
   const user = useUser();
