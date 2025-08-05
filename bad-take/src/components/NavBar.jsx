@@ -25,18 +25,8 @@ const NavBar = () => {
   }
 
   return (
-    <nav
-      style={{
-        display: "flex",
-        alignItems: "center",
-        backgroundColor: "var(--background)",
-        padding: "0.75em 1.5em",
-        borderBottom: "1px solid var(--border)",
-        position: "sticky",
-        top: 0,
-        zIndex: 1000,
-      }}
-    >
+    <nav className="navbar">
+
       <Link to="/" style={{ display: "flex", alignItems: "center", marginRight: 20, textDecoration: "none" }}>
         <img src={logo} alt="Smellies Logo" className="navbar-logo" style={{ height: 40, userSelect: "none" }} />
         <span style={{ color: "var(--primary)", fontWeight: 700, fontSize: "1.2em", marginLeft: 8, userSelect: "none" }}>

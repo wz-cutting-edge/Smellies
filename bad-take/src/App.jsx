@@ -6,7 +6,7 @@ import EditPost from "./routes/EditPost";
 import LoginPage from "./routes/loginPage";
 import NavBar from "./components/NavBar";
 
-const App = () =>{
+const App = () => {
   return (
     <Router>
       <NavBar />
@@ -19,5 +19,5 @@ const App = () =>{
       </Routes>
     </Router>
   );
-}
+};
 export default App;
