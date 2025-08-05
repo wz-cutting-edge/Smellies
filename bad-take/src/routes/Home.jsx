@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../client";
+import { Link } from 'react-router-dom';
 
 const Home = () =>{
   const [posts, setPosts] = useState([]);
   const [tags, setTags] = useState([]);
   const [sortBy, setSortBy] = useState('creation_time');
   const [searchTitle, setSearchTitle] = useState('');
-  const [selectedTag, setSelectedTag] = useState(null);
+  const [selectedTag, setSelectedTag] = useState('');
 
   useEffect(() => {
     supabase.from('tags').select('*').then(({data}) => setTags(data));
@@ -19,16 +20,10 @@ const Home = () =>{
     )
     .order(sortBy, {ascending: sortBy === 'creation_time' ? false : true});
     if (searchTitle) {
-      query = query.ilike('title', `%${searchTitle}`);
+      query = query.ilike('title', `%${searchTitle}%`);
     }
     if (selectedTag) {
-      query = query
-        .in('id', 
-          supabase
-            .from('post_tags')
-            .select('post_id')
-            .eq('tag_id', selectedTag)
-        );
+      query = query.in('id', supabase.from('post_tags').select('post_id').eq('tag_id', selectedTag));
     }
     query.then(({data, error}) =>{
       if (data) setPosts(data);
@@ -64,9 +59,9 @@ const Home = () =>{
       <ul className="post-home">
         {posts.map(post => (
           <li key={post.id} className="post-list-item">
-            <a href={`/post/${post.id}`}>
+            <Link to={`/post/${post.id}`}>
               <h2>{post.title}</h2>
-            </a>
+            </Link>
             <div className="post-data">
               <span>{new Date(post.creation_time).toLocaleString()}</span>
               <span className="upvotes">▲ {post.upvotes}</span>
