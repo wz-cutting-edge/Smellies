@@ -36,7 +36,6 @@ const CreatePost = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // 1. Add post
     const { data: post, error } = await supabase.from('posts').insert([
       {
         title: form.title,

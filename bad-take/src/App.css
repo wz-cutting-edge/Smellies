@@ -3,40 +3,238 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: var(--background);
+  color: var(--text);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+nav {
+  display: flex;
+  align-items: center;
+  background-color: var(--background);
+  padding: 0.75em 1.5em;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: inherit;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.navbar-logo {
+  height: 40px;
+  margin-right: 12px;
+  vertical-align: middle;
+  user-select: none;
+  cursor: pointer;
+}
+
+nav a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 20px;
+  font-family: inherit;
+}
+
+nav a:hover {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+nav span {
+  color: var(--text);
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+nav button {
+  padding: 0.4em 0.8em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: inherit;
+  transition: background-color 0.2s ease;
+  background-color: var(--primary);
+  color: var(--text);
+  margin-left: 10px;
+}
+
+nav button:hover {
+  background-color: var(--secondary);
+  color: var(--text);
+}
+
+.filters {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filters input {
+  max-width: 300px;
+}
+
+.post-home {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.post-list-item {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  text-align: left;
+  color: var(--text);
+  transition: box-shadow 0.2s ease;
+}
+
+.post-list-item:hover {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.post-list-item a {
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.post-list-item a:hover {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+.post-data {
+  margin-top: 0.5em;
+  font-size: 0.9rem;
+  color: var(--mutedText);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.post-tags {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.detailed-post {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-align: left;
+  color: var(--text);
+}
+
+.detailed-post h1 {
+  margin-bottom: 0.5em;
+}
+
+.detailed-post img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1em 0;
+}
+
+.detailed-post p {
+  white-space: pre-wrap;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.detailed-post button {
+  margin-right: 1rem;
+}
+
+.detailed-post ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.detailed-post li {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text);
+}
+
+.detailed-post li span {
+  font-size: 1rem;
+}
+
+.detailed-post li span:nth-child(2) {
+  color: var(--mutedText);
+  font-size: 0.85rem;
+  margin-left: 10px;
+}
+
+.detailed-post li button {
+  background-color: var(--primary);
+  color: var(--text);
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  margin-left: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.detailed-post li button:hover {
+  background-color: var(--secondary);
+}
+
+.detailed-post form {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.detailed-post form input {
+  flex-grow: 1;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.detailed-post form button {
+  padding: 0.5rem 1rem;
+}
+
+form label {
+  display: block;
+  text-align: left;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+form input[type="text"],
+form textarea,
+form select {
+  width: 100%;
+  margin-bottom: 1rem;
+  font-family: inherit;
+}
+
+@media (max-width: 700px) {
+  .post-data {
+    flex-direction: column;
+    gap: 0.25rem;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
