@@ -15,9 +15,7 @@ const Home = () =>{
   useEffect(() => {
     let query = supabase
     .from('posts')
-    .select(
-      'id, title, creation_time, upvotes, downvotes, post_tags!inner(tag_id, tags(name))'
-    )
+    .select('id, title, creation_time, upvotes, downvotes, post_tags(tag_id, tags(name))')
     .order(sortBy, {ascending: sortBy === 'creation_time' ? false : true});
     if (searchTitle) {
       query = query.ilike('title', `%${searchTitle}%`);
