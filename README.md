@@ -69,6 +69,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
+![smellies](https://github.com/user-attachments/assets/ff89cb37-c8ca-4124-b6cb-a9e5ab132a1d)
 
 
 GIF created with [ScreenToGif](https://www.screentogif.com/) for Windows
