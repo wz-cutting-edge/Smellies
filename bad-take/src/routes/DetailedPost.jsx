@@ -87,55 +87,66 @@ const DetailedPost = () => {
     if (!error) navigate("/");
   }
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <div className="page-loading">Loading...</div>;
+  if (error) return <div className="page-error">{error}</div>;
 
   const isOwner = user && user.id === post.user_id;
 
   return (
-    <div className="detailed-post">
-      <h1>{post.title}</h1>
-      <div>
-        <span>{new Date(post.creation_time).toLocaleString()}</span>
-        <span>By: {post.user_id}</span>
-        <span>Tags: {post.post_tags && post.post_tags.map(pt => pt.tags?.name).filter(Boolean).join(", ")}</span>
+    <div className="detailed-post post-detail-page">
+      <h1 className="post-title">{post.title}</h1>
+      <div className="post-meta">
+        <span className="post-date">{new Date(post.creation_time).toLocaleString()}</span>
+        <span className="post-author">By: {post.user_id}</span>
+        <span className="post-tags">
+          Tags: {post.post_tags && post.post_tags.map(pt => pt.tags?.name).filter(Boolean).join(", ")}
+        </span>
       </div>
-      {post.image_url && <img src={post.image_url} alt="Post" style={{ maxWidth: "300px" }} />}
-      <p>{post.content}</p>
-      <div>
-        <button onClick={() => user ? handleVote('posts', post.id, 'upvotes', true) : alert('Login to vote!')}>▲ {post.upvotes}</button>
-        <button onClick={() => user ? handleVote('posts', post.id, 'downvotes', true) : alert('Login to vote!')}>▼ {post.downvotes}</button>
+      {post.image_url && <img className="post-image" src={post.image_url} alt="Post" style={{ maxWidth: "300px" }} />}
+      <p className="post-content">{post.content}</p>
+      <div className="post-actions">
+        <button className="vote-button upvote-button" onClick={() => user ? handleVote('posts', post.id, 'upvotes', true) : alert('Login to vote!')}>
+          ▲ {post.upvotes}
+        </button>
+        <button className="vote-button downvote-button" onClick={() => user ? handleVote('posts', post.id, 'downvotes', true) : alert('Login to vote!')}>
+          ▼ {post.downvotes}
+        </button>
       </div>
       {isOwner && (
-        <>
-          <button onClick={() => navigate(`/edit/${post.id}`)}>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
-        </>
+        <div className="owner-actions">
+          <button className="edit-button" onClick={() => navigate(`/edit/${post.id}`)}>Edit</button>
+          <button className="delete-button" onClick={handleDelete}>Delete</button>
+        </div>
       )}
 
-      <h3>Comments</h3>
-      <ul>
+      <h3 className="comments-heading">Comments</h3>
+      <ul className="comments-list">
         {comments.map(c => (
-          <li key={c.id}>
-            <span>{c.content}</span>
-            <span>— {new Date(c.creation_time).toLocaleString()}</span>
-            <button onClick={() => user ? handleVote('comments', c.id, 'upvotes', false) : alert('Login to vote!')}>▲ {c.upvotes ?? 0}</button>
-            <button onClick={() => user ? handleVote('comments', c.id, 'downvotes', false) : alert('Login to vote!')}>▼ {c.downvotes ?? 0}</button>
+          <li className="comment-list-item" key={c.id}>
+            <span className="comment-content">{c.content}</span>
+            <span className="comment-date">— {new Date(c.creation_time).toLocaleString()}</span>
+            <button className="vote-button upvote-button" onClick={() => user ? handleVote('comments', c.id, 'upvotes', false) : alert('Login to vote!')}>
+              ▲ {c.upvotes ?? 0}
+            </button>
+            <button className="vote-button downvote-button" onClick={() => user ? handleVote('comments', c.id, 'downvotes', false) : alert('Login to vote!')}>
+              ▼ {c.downvotes ?? 0}
+            </button>
           </li>
         ))}
       </ul>
       {user ? (
-        <form onSubmit={handleAddComment}>
+        <form className="comment-form" onSubmit={handleAddComment}>
           <input
+            className="form-input comment-input"
             value={newComment}
             onChange={e => setNewComment(e.target.value)}
             placeholder="Leave a comment"
             required
           />
-          <button type="submit">Submit</button>
+          <button className="form-button comment-submit" type="submit">Submit</button>
         </form>
       ) : (
-        <div>Please log in to comment.</div>
+        <div className="auth-warning">Please log in to comment.</div>
       )}
     </div>
   );

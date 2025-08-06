@@ -51,8 +51,8 @@ const EditPost = () => {
     fetchAll();
   }, [id, navigate]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!user || user.id !== originalUserId) return <div>Not authorized.</div>;
+  if (loading) return <div className="page-loading">Loading...</div>;
+  if (!user || user.id !== originalUserId) return <div className="auth-warning">Not authorized.</div>;
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -85,14 +85,24 @@ const EditPost = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Title*<input required name="title" value={form.title} onChange={handleChange} /></label>
-      <label>Content<textarea name="content" value={form.content} onChange={handleChange} /></label>
-      <label>Image URL<input name="imageUrl" value={form.imageUrl} onChange={handleChange} /></label>
+    <form className="form edit-post-form" onSubmit={handleSubmit}>
+      <label className="form-label">
+        Title*
+        <input required className="form-input" name="title" value={form.title} onChange={handleChange} />
+      </label>
+      <label className="form-label">
+        Content
+        <textarea className="form-input form-textarea" name="content" value={form.content} onChange={handleChange} />
+      </label>
+      <label className="form-label">
+        Image URL
+        <input className="form-input" name="imageUrl" value={form.imageUrl} onChange={handleChange} />
+      </label>
       {tagCategories.map(cat => (
-        <div key={cat.label}>
-          <span>{cat.label}:</span>
+        <div className="form-tag-group" key={cat.label}>
+          <span className="form-tag-label">{cat.label}:</span>
           <select
+            className="form-select"
             value={form.tags[cat.label] || ""}
             onChange={e => handleTagChange(cat.label, e.target.value)}
           >
@@ -103,7 +113,7 @@ const EditPost = () => {
           </select>
         </div>
       ))}
-      <button type="submit">Save Changes</button>
+      <button className="form-button submit-button" type="submit">Save Changes</button>
     </form>
   );
 };

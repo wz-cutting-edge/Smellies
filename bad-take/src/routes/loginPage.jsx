@@ -4,11 +4,14 @@ import { supabase } from '../client';
 
 const LoginPage = () => {
   return (
-    <Auth
-      supabaseClient={supabase}
-      appearance={{ theme: ThemeSupa }}
-      providers={[]}
-    />
+    <div className="login-page">
+      <Auth
+        className="login-auth-form"
+        supabaseClient={supabase}
+        appearance={{ theme: ThemeSupa }}
+        providers={[]}
+      />
+    </div>
   );
 };
 

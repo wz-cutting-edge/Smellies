@@ -17,8 +17,6 @@ const CreatePost = () => {
     supabase.from('tags').select('*').then(({data}) => setAllTags(data));
   }, []);
 
-  if (!user) return <div>Please log in to create a post.</div>;
-
   function handleChange(e) {
     const {name, value} = e.target;
     setForm(f => ({...f, [name]: value}));
@@ -62,15 +60,26 @@ const CreatePost = () => {
     window.location.href = "/";
   }
 
+  if (!user) return <div className="auth-warning">Please log in to create a post.</div>;
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Title*<input required name="title" value={form.title} onChange={handleChange} /></label>
-      <label>Content<textarea name="content" value={form.content} onChange={handleChange} /></label>
-      <label>Image URL<input name="imageUrl" value={form.imageUrl} onChange={handleChange} /></label>
+    <form className="form create-post-form" onSubmit={handleSubmit}>
+      <label className="form-label">
+        Title*<input required className="form-input" name="title" value={form.title} onChange={handleChange} />
+      </label>
+      <label className="form-label">
+        Content
+        <textarea className="form-input form-textarea" name="content" value={form.content} onChange={handleChange} />
+      </label>
+      <label className="form-label">
+        Image URL
+        <input className="form-input" name="imageUrl" value={form.imageUrl} onChange={handleChange} />
+      </label>
       {tagCategories.map(cat => (
-        <div key={cat.label}>
-          <span>{cat.label}:</span>
+        <div className="form-tag-group" key={cat.label}>
+          <span className="form-tag-label">{cat.label}:</span>
           <select
+            className="form-select"
             value={form.tags[cat.label] || ""}
             onChange={e => handleTagChange(cat.label, e.target.value)}
           >
@@ -81,7 +90,7 @@ const CreatePost = () => {
           </select>
         </div>
       ))}
-      <button type="submit">Create Post</button>
+      <button className="form-button submit-button" type="submit">Create Post</button>
     </form>
   );
 };

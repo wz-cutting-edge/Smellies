@@ -51,19 +51,19 @@ const Home = () =>{
 
   return (
     <div className="home">
-      <div className="filters">
+      <div className="filters filters-bar">
         <input
+          className="filter-input"
           value={searchTitle}
           onChange={e => setSearchTitle(e.target.value)}
           placeholder="Search posts by title"
         />
-
-        <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
+        <select className="filter-select" value={sortBy} onChange={e => setSortBy(e.target.value)}>
           <option value="creation_time">Newest</option>
           <option value="upvotes">Most Upvoted</option>
         </select>
-
         <select
+          className="filter-select"
           value={selectedTag}
           onChange={e => setSelectedTag(e.target.value)}
         >
@@ -76,14 +76,14 @@ const Home = () =>{
         </select>
       </div>
 
-      <ul className="post-home">
+      <ul className="post-home post-list">
         {posts.map(post => (
           <li key={post.id} className="post-list-item">
-            <Link to={`/post/${post.id}`}>
-              <h2>{post.title}</h2>
+            <Link to={`/post/${post.id}`} className="post-link">
+              <h2 className="post-title">{post.title}</h2>
             </Link>
-            <div className="post-data">
-              <span>{new Date(post.creation_time).toLocaleString()}</span>
+            <div className="post-data post-meta">
+              <span className="post-date">{new Date(post.creation_time).toLocaleString()}</span>
               <span className="upvotes">▲ {post.upvotes}</span>
               <span className="downvotes">▼ {post.downvotes}</span>
               {post.post_tags && (
