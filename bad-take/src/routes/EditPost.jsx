@@ -51,16 +51,27 @@ const EditPost = () => {
     fetchAll();
   }, [id, navigate]);
 
-  if (loading) return <div className="page-loading">Loading...</div>;
-  if (!user || user.id !== originalUserId) return <div className="auth-warning">Not authorized.</div>;
+  if (loading) return (
+    <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--mutedText)' }}>
+      Loading...
+    </div>
+  );
+  
+  if (!user || user.id !== originalUserId) return (
+    <div style={{ textAlign: 'center', padding: '4rem', color: '#dc3545' }}>
+      Not authorized to edit this post.
+    </div>
+  );
 
   function handleChange(e) {
     const { name, value } = e.target;
     setForm(f => ({ ...f, [name]: value }));
   }
+  
   function handleTagChange(category, value) {
     setForm(f => ({ ...f, tags: { ...f.tags, [category]: value } }));
   }
+  
   async function handleSubmit(e) {
     e.preventDefault();
     await supabase.from('posts').update({
@@ -85,36 +96,219 @@ const EditPost = () => {
   }
 
   return (
-    <form className="form edit-post-form" onSubmit={handleSubmit}>
-      <label className="form-label">
-        Title*
-        <input required className="form-input" name="title" value={form.title} onChange={handleChange} />
-      </label>
-      <label className="form-label">
-        Content
-        <textarea className="form-input form-textarea" name="content" value={form.content} onChange={handleChange} />
-      </label>
-      <label className="form-label">
-        Image URL
-        <input className="form-input" name="imageUrl" value={form.imageUrl} onChange={handleChange} />
-      </label>
-      {tagCategories.map(cat => (
-        <div className="form-tag-group" key={cat.label}>
-          <span className="form-tag-label">{cat.label}:</span>
-          <select
-            className="form-select"
-            value={form.tags[cat.label] || ""}
-            onChange={e => handleTagChange(cat.label, e.target.value)}
-          >
-            <option value="">None</option>
-            {cat.group.map(tagVal => (
-              <option key={tagVal} value={tagVal}>{tagVal}</option>
-            ))}
-          </select>
-        </div>
-      ))}
-      <button className="form-button submit-button" type="submit">Save Changes</button>
-    </form>
+    <div className="page-container">
+      <div 
+        style={{
+          maxWidth: '600px',
+          margin: '0 auto',
+          background: 'var(--card)',
+          borderRadius: '12px',
+          border: '1px solid var(--border)',
+          padding: '2.5rem',
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)'
+        }}
+      >
+        <h1 
+          style={{
+            color: 'var(--primary)',
+            fontSize: '2rem',
+            fontWeight: 700,
+            marginBottom: '2rem',
+            textAlign: 'center'
+          }}
+        >
+          Edit Post
+        </h1>
+
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div>
+            <label 
+              style={{
+                display: 'block',
+                fontWeight: 600,
+                marginBottom: '0.5rem',
+                color: 'var(--text)'
+              }}
+            >
+              Title *
+            </label>
+            <input 
+              required 
+              name="title" 
+              value={form.title} 
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '1rem',
+                border: '2px solid var(--border)',
+                borderRadius: '8px',
+                background: 'var(--background)',
+                color: 'var(--text)',
+                fontSize: '1rem',
+                outline: 'none',
+                transition: 'border-color 0.2s ease'
+              }}
+              onFocus={e => e.target.style.borderColor = 'var(--primary)'}
+              onBlur={e => e.target.style.borderColor = 'var(--border)'}
+            />
+          </div>
+
+          <div>
+            <label 
+              style={{
+                display: 'block',
+                fontWeight: 600,
+                marginBottom: '0.5rem',
+                color: 'var(--text)'
+              }}
+            >
+              Content
+            </label>
+            <textarea 
+              name="content" 
+              value={form.content} 
+              onChange={handleChange}
+              rows="6"
+              style={{
+                width: '100%',
+                padding: '1rem',
+                border: '2px solid var(--border)',
+                borderRadius: '8px',
+                background: 'var(--background)',
+                color: 'var(--text)',
+                fontSize: '1rem',
+                outline: 'none',
+                transition: 'border-color 0.2s ease',
+                resize: 'vertical',
+                fontFamily: 'inherit'
+              }}
+              onFocus={e => e.target.style.borderColor = 'var(--primary)'}
+              onBlur={e => e.target.style.borderColor = 'var(--border)'}
+            />
+          </div>
+
+          <div>
+            <label 
+              style={{
+                display: 'block',
+                fontWeight: 600,
+                marginBottom: '0.5rem',
+                color: 'var(--text)'
+              }}
+            >
+              Image URL (optional)
+            </label>
+            <input 
+              name="imageUrl" 
+              value={form.imageUrl} 
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '1rem',
+                border: '2px solid var(--border)',
+                borderRadius: '8px',
+                background: 'var(--background)',
+                color: 'var(--text)',
+                fontSize: '1rem',
+                outline: 'none',
+                transition: 'border-color 0.2s ease'
+              }}
+              onFocus={e => e.target.style.borderColor = 'var(--primary)'}
+              onBlur={e => e.target.style.borderColor = 'var(--border)'}
+            />
+          </div>
+
+          {tagCategories.map(cat => (
+            <div key={cat.label}>
+              <label 
+                style={{
+                  display: 'block',
+                  fontWeight: 600,
+                  marginBottom: '0.5rem',
+                  color: 'var(--text)'
+                }}
+              >
+                {cat.label}
+              </label>
+              <select
+                value={form.tags[cat.label] || ""}
+                onChange={e => handleTagChange(cat.label, e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '1rem',
+                  border: '2px solid var(--border)',
+                  borderRadius: '8px',
+                  background: 'var(--background)',
+                  color: 'var(--text)',
+                  fontSize: '1rem',
+                  outline: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                <option value="">None</option>
+                {cat.group.map(tagVal => (
+                  <option key={tagVal} value={tagVal}>{tagVal}</option>
+                ))}
+              </select>
+            </div>
+          ))}
+
+          <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+            <button 
+              type="submit"
+              style={{
+                background: 'var(--primary)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '1rem 2rem',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                flex: 1
+              }}
+              onMouseEnter={e => {
+                e.target.style.background = 'var(--secondary)';
+                e.target.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={e => {
+                e.target.style.background = 'var(--primary)';
+                e.target.style.transform = 'translateY(0)';
+              }}
+            >
+              Save Changes
+            </button>
+            
+            <button 
+              type="button"
+              onClick={() => navigate(`/post/${id}`)}
+              style={{
+                background: 'var(--background)',
+                color: 'var(--text)',
+                border: '2px solid var(--border)',
+                borderRadius: '8px',
+                padding: '1rem 2rem',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={e => {
+                e.target.style.background = 'var(--mutedText)';
+                e.target.style.color = 'white';
+              }}
+              onMouseLeave={e => {
+                e.target.style.background = 'var(--background)';
+                e.target.style.color = 'var(--text)';
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
