@@ -92,7 +92,7 @@ const EditPost = () => {
     for (const tagId of tagIds) {
       await supabase.from('post_tags').insert([{ post_id: id, tag_id }]);
     }
-    navigate(`/post/${id}`);
+    navigate("/", { replace: true });
   }
 
   return (

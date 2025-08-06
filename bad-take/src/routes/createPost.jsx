@@ -59,7 +59,7 @@ const CreatePost = () => {
       await supabase.from('post_tags').insert([{ post_id: post.id, tag_id }]);
     }
 
-    navigate("/");
+    navigate("/", { replace: true });
   }
 
   if (!user) return (
