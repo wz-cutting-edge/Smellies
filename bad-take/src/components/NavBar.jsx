@@ -26,71 +26,56 @@ const NavBar = () => {
 
   return (
     <nav className="navbar">
-
-      <Link to="/" style={{ display: "flex", alignItems: "center", marginRight: 20, textDecoration: "none" }}>
-        <img src={logo} alt="Smellies Logo" className="navbar-logo" style={{ height: 40, userSelect: "none" }} />
-        <span style={{ color: "var(--primary)", fontWeight: 700, fontSize: "1.2em", marginLeft: 8, userSelect: "none" }}>
-          SMELLIES
-        </span>
-      </Link>
-
-      <Link to="/" style={{ marginRight: 15, color: "var(--primary)", textDecoration: "none", fontWeight: 600 }}>
-        Home
-      </Link>
-
-      {user && (
-        <Link to="/create" style={{ marginRight: 15, color: "var(--primary)", textDecoration: "none", fontWeight: 600 }}>
-          Create Post
-        </Link>
-      )}
-
-      {!user && (
-        <Link to="/login" style={{ marginRight: 15, color: "var(--primary)", textDecoration: "none", fontWeight: 600 }}>
-          Login/Signup
-        </Link>
-      )}
-
-      <button
-        onClick={toggleTheme}
-        aria-label="Toggle light/dark theme"
-        style={{
-          marginLeft: "auto",
-          padding: "0.4em 0.8em",
-          backgroundColor: "var(--secondary)",
-          border: "none",
-          borderRadius: 6,
-          cursor: "pointer",
-          fontWeight: 600,
-          color: "var(--text)",
-          userSelect: "none",
-        }}
-      >
-        {theme === "light" ? "🌙 Dark" : "☀️ Light"}
-      </button>
-
-      {user && (
-        <>
-          <span style={{ marginLeft: 15, color: "var(--text)", fontWeight: 500, userSelect: "none" }}>
-            Hi, {user.email}
+      <div className="navbar-brand">
+        <Link to="/" className="navbar-brand-link">
+          <img src={logo} alt="Smellies Logo" className="navbar-logo" />
+          <span className="navbar-brand-text">
+            SMELLIES
           </span>
-          <button
-            onClick={handleLogout}
-            style={{
-              marginLeft: 10,
-              padding: "0.4em 0.8em",
-              backgroundColor: "var(--primary)",
-              color: "var(--text)",
-              border: "none",
-              borderRadius: 6,
-              cursor: "pointer",
-              fontWeight: 600,
-              userSelect: "none",
-            }}
-          >
-            Logout
-          </button>
-        </>
-      )}
+        </Link>
+      </div>
+
+      <div className="nav-links">
+        <Link to="/" className="nav-link home-link">
+          Home
+        </Link>
+
+        {user && (
+          <Link to="/create" className="nav-link create-link">
+            Create Post
+          </Link>
+        )}
+
+        {!user && (
+          <Link to="/login" className="nav-link login-link">
+            Login/Signup
+          </Link>
+        )}
+      </div>
+
+      <div className="navbar-controls">
+        <button
+          onClick={toggleTheme}
+          aria-label="Toggle light/dark theme"
+          className="nav-button theme-toggle-button"
+        >
+          {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+        </button>
+
+        {user && (
+          <div className="user-section">
+            <span className="user-greeting">
+              Hi, {user.email}
+            </span>
+            <button
+              onClick={handleLogout}
+              className="nav-button logout-button"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };
