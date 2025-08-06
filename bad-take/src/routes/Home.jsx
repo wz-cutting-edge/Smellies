@@ -12,21 +12,43 @@ const Home = () =>{
   useEffect(() => {
     supabase.from('tags').select('*').then(({data}) => setTags(data));
   }, []);
+
   useEffect(() => {
-    let query = supabase
-    .from('posts')
-    .select('id, title, creation_time, upvotes, downvotes, post_tags(tag_id, tags(name))')
-    .order(sortBy, {ascending: sortBy === 'creation_time' ? false : true});
-    if (searchTitle) {
-      query = query.ilike('title', `%${searchTitle}%`);
+    async function fetchPosts() {
+      let query = supabase
+        .from('posts')
+        .select('id, title, creation_time, upvotes, downvotes, post_tags(tag_id, tags(name))')
+        .order(sortBy, { ascending: sortBy === 'creation_time' ? false : true });
+
+      if (searchTitle) {
+        query = query.ilike('title', `%${searchTitle}%`);
+      }
+
+      if (selectedTag) {
+        const { data: postTagData, error: ptError } = await supabase
+          .from('post_tags')
+          .select('post_id')
+          .eq('tag_id', selectedTag);
+
+        if (ptError) {
+          console.error(ptError);
+          return;
+        }
+
+        const postIds = postTagData.map(pt => pt.post_id);
+        if (postIds.length > 0) {
+          query = query.in('id', postIds);
+        } else {
+          setPosts([]);
+          return;
+        }
+      }
+      const { data, error } = await query;
+      if (!error) setPosts(data);
     }
-    if (selectedTag) {
-      query = query.in('id', supabase.from('post_tags').select('post_id').eq('tag_id', selectedTag));
-    }
-    query.then(({data, error}) =>{
-      if (data) setPosts(data);
-    });
+    fetchPosts();
   }, [sortBy, searchTitle, selectedTag]);
+
   return (
     <div className="home">
       <div className="filters">

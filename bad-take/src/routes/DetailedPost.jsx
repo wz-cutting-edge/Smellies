@@ -60,16 +60,25 @@ const DetailedPost = () => {
   }
 
   async function handleVote(table, rowId, field, isPost) {
-    await supabase
+    let { data, error } = await supabase
       .from(table)
-      .update({ [field]: supabase.literal(`${field} + 1`) })
+      .select(field)
+      .eq("id", rowId)
+      .single();
+    if (error || !data) return alert('Error voting');
+    const newValue = (data[field] ?? 0) + 1;
+    const { error: updateError } = await supabase
+      .from(table)
+      .update({ [field]: newValue })
       .eq("id", rowId);
-    if (isPost) setPost(p => ({ ...p, [field]: p[field] + 1 }));
-    else setComments(cs =>
-      cs.map(c =>
-        c.id === rowId ? { ...c, [field]: c[field] + 1 } : c
-      )
-    );
+    if (updateError) return alert('Error updating vote');
+    if (isPost) {
+      setPost(p => ({ ...p, [field]: newValue }));
+    } else {
+      setComments(cs =>
+        cs.map(c => c.id === rowId ? { ...c, [field]: newValue } : c)
+      );
+    }
   }
 
   async function handleDelete() {
