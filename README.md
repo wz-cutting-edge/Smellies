@@ -4,7 +4,7 @@ Submitted by: **William Zheng**
 
 This web app: **Smellies is the online hangout for people who smell... really good. It’s a fragrance forum where scent-obsessed folks share their blind buy wins (and horror stories), drop layering combos that go hard, and beg the community for cheaper dupes of $500 niche unicorns. Got a new cologne that smells like regret? Ask if it just needs to macerate. Found a hidden gem at Marshalls? Flex it. Smellies is where you come to laugh, cry, overthink your next purchase, and bond with other good-smelling weirdos who understand the thrill of cracking open a fresh bottle and asking the real questions: "Does this slap?"**
 
-Time spent: **X** hours spent in total
+Time spent: **30** hours spent in total
 
 ## Required Features
 
@@ -52,7 +52,7 @@ The following **optional** features are implemented:
 - [ ] Users can repost a previous post by referencing its post ID. On the post page of the new post
   - Users can repost a previous post by referencing its post ID
   - On the post page of the new post, the referenced post is displayed and linked, creating a thread
-- [ ] Users can customize the interface
+- [x] Users can customize the interface
   - e.g., selecting the color scheme or showing the content and image of each post on the home feed
 - [ ] Users can add more characterics to their posts
   - Users can share and view web videos
@@ -63,24 +63,19 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you added to improve the site's functionality!
+* [x] Supabase auth, upvote/downvote system (on posts and comments)
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-<!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...  
-<!-- Recommended tools:
-[Kap](https://getkap.co/) for macOS
-[ScreenToGif](https://www.screentogif.com/) for Windows
-[peek](https://github.com/phw/peek) for Linux. -->
+
+GIF created with [ScreenToGif](https://www.screentogif.com/) for Windows
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I encountered significant challenges when configuring Supabase policies to distinguish between posters and viewers. Styling the application was also difficult; I had to use inline styles because standard CSS was not applying as expected. Implementing tags and categories proved to be more complex than anticipated, and I was unable to complete that feature in time. Although several planned features were not realized, I was able to finish all required functionality, albeit very close to the deadline. I plan to revisit and improve these areas in the future. This project was a nightmare to debug because of all of the moving parts.
 
 ## License
 

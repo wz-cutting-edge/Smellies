@@ -84,7 +84,7 @@ const Home = () => {
             margin: '0 auto'
           }}
         >
-          The fragrance community where scent enthusiasts share reviews, discoveries, and aromatic adventures
+          Where being smelly is a compliment.
         </p>
       </div>
 
