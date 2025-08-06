@@ -13,6 +13,7 @@ const DetailedPost = () => {
   const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [authorEmail, setAuthorEmail] = useState('Loading...');
 
   useEffect(() => {
     async function fetchData() {
@@ -41,6 +42,26 @@ const DetailedPost = () => {
     }
     fetchData();
   }, [id]);
+
+  // Fetch author information when post is loaded
+  useEffect(() => {
+    async function fetchAuthorInfo() {
+      if (post?.user_id) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('email, display_name')
+          .eq('id', post.user_id)
+          .single();
+        
+        if (profile) {
+          setAuthorEmail(profile.display_name || profile.email || 'Unknown User');
+        } else {
+          setAuthorEmail(`User #${post.user_id.substring(0, 8)}`);
+        }
+      }
+    }
+    fetchAuthorInfo();
+  }, [post?.user_id]);
 
   async function handleAddComment(e) {
     e.preventDefault();
@@ -145,7 +166,7 @@ const DetailedPost = () => {
             }}
           >
             <span>{new Date(post.creation_time).toLocaleDateString()}</span>
-            <span>By: {user?.email || 'Anonymous'}</span>
+            <span>By: {authorEmail}</span>
           </div>
 
           {post.post_tags && post.post_tags.length > 0 && (
@@ -312,6 +333,7 @@ const DetailedPost = () => {
           </div>
         )}
       </article>
+
       <section style={{ marginTop: '3rem' }}>
         <h3 
           style={{
@@ -323,6 +345,7 @@ const DetailedPost = () => {
         >
           Comments ({comments.length})
         </h3>
+
         {user ? (
           <form 
             onSubmit={handleAddComment}
