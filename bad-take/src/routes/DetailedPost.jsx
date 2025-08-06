@@ -46,14 +46,22 @@ const DetailedPost = () => {
     e.preventDefault();
     if (!user) return alert("Please login to comment!");
     if (!newComment.trim()) return;
-    const { error } = await supabase.from("comments").insert([{
-      post_id: id,
-      content: newComment.trim(),
-      user_id: user.id,
-    }]);
-    if (!error) {
+    
+    const { data: newCommentData, error } = await supabase
+      .from("comments")
+      .insert([{
+        post_id: id,
+        content: newComment.trim(),
+        user_id: user.id,
+      }])
+      .select()
+      .single();
+      
+    if (!error && newCommentData) {
       setComments(c => [...c, {
-        content: newComment.trim(), creation_time: new Date().toISOString(), upvotes: 0, downvotes: 0, user_id: user.id
+        ...newCommentData,
+        upvotes: 0,
+        downvotes: 0
       }]);
       setNewComment("");
     }
@@ -137,7 +145,7 @@ const DetailedPost = () => {
             }}
           >
             <span>{new Date(post.creation_time).toLocaleDateString()}</span>
-            <span>By: {post.user_id.substring(0, 8)}...</span>
+            <span>By: {user?.email || 'Anonymous'}</span>
           </div>
 
           {post.post_tags && post.post_tags.length > 0 && (
@@ -190,7 +198,6 @@ const DetailedPost = () => {
           </div>
         )}
 
-        {/* Voting */}
         <div 
           style={{
             display: 'flex',
@@ -255,7 +262,6 @@ const DetailedPost = () => {
           </button>
         </div>
 
-        {/* Owner Actions */}
         {isOwner && (
           <div 
             style={{
@@ -306,8 +312,6 @@ const DetailedPost = () => {
           </div>
         )}
       </article>
-
-      {/* Comments Section */}
       <section style={{ marginTop: '3rem' }}>
         <h3 
           style={{
@@ -319,8 +323,6 @@ const DetailedPost = () => {
         >
           Comments ({comments.length})
         </h3>
-
-        {/* Comment Form */}
         {user ? (
           <form 
             onSubmit={handleAddComment}
@@ -395,7 +397,6 @@ const DetailedPost = () => {
           </div>
         )}
 
-        {/* Comments List */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {comments.map(comment => (
             <div

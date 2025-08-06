@@ -1,8 +1,20 @@
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '../client';
+import { useUser } from '../UserContext';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  const user = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
   return (
     <div 
       style={{

@@ -10,7 +10,15 @@ const Home = () => {
   const [selectedTag, setSelectedTag] = useState('');
 
   useEffect(() => {
-    supabase.from('tags').select('*').then(({data}) => setTags(data));
+    async function fetchTags() {
+      const { data, error } = await supabase.from('tags').select('*');
+      if (error) {
+        console.error('Error fetching tags:', error);
+      } else {
+        setTags(data || []);
+      }
+    }
+    fetchTags();
   }, []);
 
   useEffect(() => {
@@ -18,7 +26,7 @@ const Home = () => {
       let query = supabase
         .from('posts')
         .select('id, title, creation_time, upvotes, downvotes, post_tags(tag_id, tags(name))')
-        .order(sortBy, { ascending: sortBy === 'creation_time' ? false : true });
+        .order(sortBy, { ascending: sortBy === 'upvotes' ? false : (sortBy === 'creation_time' ? false : true) });
 
       if (searchTitle) {
         query = query.ilike('title', `%${searchTitle}%`);
@@ -51,7 +59,6 @@ const Home = () => {
 
   return (
     <div className="page-container">
-      {/* Header */}
       <div 
         style={{
           textAlign: 'center',
@@ -81,7 +88,6 @@ const Home = () => {
         </p>
       </div>
 
-      {/* Filters */}
       <div 
         style={{
           display: 'flex',
@@ -157,7 +163,6 @@ const Home = () => {
         </select>
       </div>
 
-      {/* Posts */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         {posts.length === 0 ? (
           <div 

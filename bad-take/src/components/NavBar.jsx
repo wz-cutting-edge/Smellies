@@ -45,7 +45,6 @@ const NavBar = () => {
           gap: '2rem'
         }}
       >
-        {/* Brand */}
         <Link 
           to="/" 
           style={{
@@ -71,7 +70,6 @@ const NavBar = () => {
           <span style={{ color: 'var(--primary)' }}>SMELLIES</span>
         </Link>
 
-        {/* Navigation Links */}
         <div 
           style={{
             display: 'flex',
@@ -132,7 +130,6 @@ const NavBar = () => {
           )}
         </div>
 
-        {/* Controls */}
         <div 
           style={{
             display: 'flex',

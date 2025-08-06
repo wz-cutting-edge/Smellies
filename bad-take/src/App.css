@@ -4,7 +4,6 @@
   color: var(--text);
 }
 
-/* Minimal utility classes */
 .flex { display: flex; }
 .flex-col { flex-direction: column; }
 .items-center { align-items: center; }
@@ -17,7 +16,6 @@
 .mb-8 { margin-bottom: 2rem; }
 .mt-4 { margin-top: 1rem; }
 
-/* Clean, minimal navbar */
 .navbar {
   background-color: var(--card);
   border-bottom: 1px solid var(--border);
@@ -27,7 +25,6 @@
   backdrop-filter: blur(10px);
 }
 
-/* Form styles */
 .form-container {
   max-width: 600px;
   margin: 2rem auto;
@@ -44,7 +41,6 @@
   color: var(--text);
 }
 
-/* Content areas */
 .page-container {
   max-width: 900px;
   margin: 0 auto;
@@ -58,7 +54,6 @@
   padding: 2rem 1rem;
 }
 
-/* Loading and error states */
 .loading, .error, .auth-message {
   text-align: center;
   padding: 3rem 1rem;
@@ -69,7 +64,6 @@
   color: #dc3545;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .page-container {
     padding: 1rem 0.75rem;
